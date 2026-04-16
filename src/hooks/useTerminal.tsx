@@ -67,7 +67,7 @@ export function useTerminal() {
     const ClickableCmd = ({ command, desc }: { command: string, desc: string }) => (
       <div>
         <span 
-          className="text-green-400 font-bold w-24 inline-block cursor-pointer hover:text-green-300 transition-colors"
+          className="text-emerald-500 font-bold w-24 inline-block cursor-pointer hover:text-emerald-400 transition-colors"
           onClick={() => setInput?.(command)}
         >
           {command}
@@ -94,7 +94,7 @@ export function useTerminal() {
         break;
       case 'whoami':
       case 'about':
-        output = <div className="mt-2 mb-4 text-gray-300">{userData.bio}</div>;
+        output = <div className="mt-2 mb-4 text-slate-300">{userData.bio}</div>;
         break;
       case 'projects':
         if (args[1]) {
@@ -103,10 +103,10 @@ export function useTerminal() {
           if (project) {
             output = (
               <div className="mt-2 mb-4">
-                <div className="text-blue-400 font-bold text-lg">{project.name}</div>
-                <div className="text-gray-300 my-1">{project.description}</div>
-                <div className="text-yellow-300">Tech: {project.tech.join(', ')}</div>
-                <div className="text-gray-400 mt-1">Link: <a href={project.link} target="_blank" rel="noreferrer" className="underline hover:text-white">{project.link}</a></div>
+                <div className="text-emerald-400 font-bold text-lg">{project.name}</div>
+                <div className="text-slate-300 my-1">{project.description}</div>
+                <div className="text-white">Tech: {project.tech.join(', ')}</div>
+                <div className="text-slate-400 mt-1">Link: <a href={project.link} target="_blank" rel="noreferrer" className="underline hover:text-white">{project.link}</a></div>
               </div>
             );
           } else {
@@ -118,14 +118,14 @@ export function useTerminal() {
               {userData.projects.map(p => (
                 <div key={p.name}>
                   <span 
-                    className="text-blue-400 font-bold cursor-pointer hover:text-blue-300 transition-colors"
+                    className="text-emerald-400 font-bold cursor-pointer hover:text-emerald-300 transition-colors"
                     onClick={() => setInput?.(`projects ${p.name.toLowerCase()}`)}
                   >
                     {p.name}
                   </span> - {p.description}
                 </div>
               ))}
-              <div className="text-gray-500 text-sm mt-2">Tip: Click a project or type 'projects &lt;name&gt;' for details.</div>
+              <div className="text-slate-500 text-sm mt-2">Tip: Click a project or type 'projects &lt;name&gt;' for details.</div>
             </div>
           );
         }
@@ -133,19 +133,19 @@ export function useTerminal() {
       case 'skills':
         output = (
           <div className="mt-2 mb-4 flex flex-col gap-2">
-            <div><span className="text-purple-400 font-bold">Frontend:</span> {userData.skills.frontend.join(', ')}</div>
-            <div><span className="text-purple-400 font-bold">Backend:</span> {userData.skills.backend.join(', ')}</div>
-            <div><span className="text-purple-400 font-bold">Tools:</span> {userData.skills.tools.join(', ')}</div>
+            <div><span className="text-slate-300 font-bold">Frontend:</span> {userData.skills.frontend.join(', ')}</div>
+            <div><span className="text-slate-300 font-bold">Backend:</span> {userData.skills.backend.join(', ')}</div>
+            <div><span className="text-slate-300 font-bold">Tools:</span> {userData.skills.tools.join(', ')}</div>
           </div>
         );
         break;
       case 'contact':
         output = (
           <div className="mt-2 mb-4 flex flex-col gap-1">
-            <div><span className="text-pink-400 font-bold w-20 inline-block">Email:</span> <a href={`mailto:${userData.contact.email}`} className="underline hover:text-white">{userData.contact.email}</a></div>
-            <div><span className="text-pink-400 font-bold w-20 inline-block">GitHub:</span> <a href={userData.contact.github} target="_blank" rel="noreferrer" className="underline hover:text-white">{userData.contact.github}</a></div>
-            <div><span className="text-pink-400 font-bold w-20 inline-block">LinkedIn:</span> <a href={userData.contact.linkedin} target="_blank" rel="noreferrer" className="underline hover:text-white">{userData.contact.linkedin}</a></div>
-            <div><span className="text-pink-400 font-bold w-20 inline-block">Twitter:</span> <a href={userData.contact.twitter} target="_blank" rel="noreferrer" className="underline hover:text-white">{userData.contact.twitter}</a></div>
+            <div><span className="text-slate-300 font-bold w-20 inline-block">Email:</span> <a href={`mailto:${userData.contact.email}`} className="underline hover:text-white">{userData.contact.email}</a></div>
+            <div><span className="text-slate-300 font-bold w-20 inline-block">GitHub:</span> <a href={userData.contact.github} target="_blank" rel="noreferrer" className="underline hover:text-white">{userData.contact.github}</a></div>
+            <div><span className="text-slate-300 font-bold w-20 inline-block">LinkedIn:</span> <a href={userData.contact.linkedin} target="_blank" rel="noreferrer" className="underline hover:text-white">{userData.contact.linkedin}</a></div>
+            <div><span className="text-slate-300 font-bold w-20 inline-block">Twitter:</span> <a href={userData.contact.twitter} target="_blank" rel="noreferrer" className="underline hover:text-white">{userData.contact.twitter}</a></div>
           </div>
         );
         break;
@@ -154,9 +154,9 @@ export function useTerminal() {
         const lastVisitStr = state.lastVisit ? new Date(state.lastVisit).toLocaleString() : 'First visit';
         output = (
           <div className="mt-2 mb-4 flex flex-col gap-1">
-            <div><span className="text-cyan-400 font-bold w-32 inline-block">Current Mode:</span> {state.mode}</div>
-            <div><span className="text-cyan-400 font-bold w-32 inline-block">Session Time:</span> {sessionTime} seconds</div>
-            <div><span className="text-cyan-400 font-bold w-32 inline-block">Last Visit:</span> {lastVisitStr}</div>
+            <div><span className="text-emerald-400 font-bold w-32 inline-block">Current Mode:</span> {state.mode}</div>
+            <div><span className="text-emerald-400 font-bold w-32 inline-block">Session Time:</span> {sessionTime} seconds</div>
+            <div><span className="text-emerald-400 font-bold w-32 inline-block">Last Visit:</span> {lastVisitStr}</div>
           </div>
         );
         break;
@@ -164,7 +164,7 @@ export function useTerminal() {
         clearLogs();
         return; // Return early to avoid adding the 'clear' command to logs
       case 'ui':
-        output = <div className="mt-2 mb-4 text-green-400">Switching to UI mode...</div>;
+        output = <div className="mt-2 mb-4 text-emerald-500">Switching to UI mode...</div>;
         addLog(trimmed, output);
         setTimeout(() => setMode('ui'), 500);
         return;
@@ -182,4 +182,5 @@ export function useTerminal() {
     clearLogs
   };
 }
+
 

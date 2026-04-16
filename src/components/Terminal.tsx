@@ -30,15 +30,15 @@ export function Terminal({ terminal }: TerminalProps) {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [state.logs, isBooting]);
 
-  // Focus input on click anywhere
+  // Focus input on any key press
   useEffect(() => {
-    const handleGlobalClick = () => {
-      if (window.getSelection()?.toString() === '') {
-        inputRef.current?.focus();
-      }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') return;
+      inputRef.current?.focus();
     };
-    document.addEventListener('click', handleGlobalClick);
-    return () => document.removeEventListener('click', handleGlobalClick);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -78,12 +78,12 @@ export function Terminal({ terminal }: TerminalProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#050505] text-gray-200 font-mono p-4 sm:p-8 text-sm sm:text-base selection:bg-gray-700 relative overflow-hidden hide-cursor">
+    <div className="h-full w-full bg-transparent text-slate-300 font-mono p-4 sm:p-8 text-sm sm:text-base selection:bg-slate-700 relative overflow-hidden hide-cursor">
       {/* CRT Scanline Overlay */}
-      <div className="absolute inset-0 scanlines z-50 mix-blend-overlay opacity-50" />
+      <div className="absolute inset-0 scanlines z-50 mix-blend-overlay opacity-50 pointer-events-none" />
       
-      <div className="max-w-4xl mx-auto relative z-10 h-full overflow-y-auto overscroll-y-contain pb-16 flicker">
-        <div className="mb-6 text-gray-400">
+      <div className="max-w-4xl mx-auto relative z-10 h-full overflow-y-auto custom-scrollbar pb-16 pr-4">
+        <div className="mb-6 text-slate-500">
           <AnimatePresence>
             {isBooting ? (
               bootLines.map((line, i) => (
@@ -120,7 +120,7 @@ export function Terminal({ terminal }: TerminalProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               >
-                <div className="flex items-center text-green-400">
+                <div className="flex items-center text-emerald-500">
                   <span className="mr-2">guest@terminal-os:~$</span>
                   <span className="text-white">{log.cmd}</span>
                 </div>
@@ -132,7 +132,7 @@ export function Terminal({ terminal }: TerminalProps) {
 
         {!isBooting && (
           <motion.div 
-            className="flex items-center text-green-400 mt-2"
+            className="flex items-center text-emerald-500 mt-2 border-l-2 border-emerald-500/50 pl-3 glow-flicker"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -144,7 +144,7 @@ export function Terminal({ terminal }: TerminalProps) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="bg-transparent outline-none border-none flex-1 text-white caret-green-400"
+              className="bg-transparent outline-none border-none flex-1 text-white caret-emerald-500"
               autoFocus
               spellCheck={false}
               autoComplete="off"
@@ -156,4 +156,5 @@ export function Terminal({ terminal }: TerminalProps) {
     </div>
   );
 }
+
 
