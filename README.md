@@ -15,3 +15,4 @@ A high-performance personal website built with a focus on speed, animations, and
 
 ## 📝 License
 MIT © Abubakr
+
