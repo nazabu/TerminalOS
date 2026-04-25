@@ -15,7 +15,7 @@ export default function App() {
   const terminal = useTerminal();
 
   return (
-    <div className="fixed inset-0 w-full h-full bg-[#050505] overflow-hidden">
+    <div className="fixed inset-0 w-full h-full bg-slate-50 overflow-hidden">
       <NeuralBackground />
       <CustomCursor />
       <AnimatePresence mode="wait">
