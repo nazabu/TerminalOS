@@ -10,15 +10,6 @@ interface GlassDashboardProps {
 
 export function GlassDashboard({ terminal }: GlassDashboardProps) {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
-  const [hidingProject, setHidingProject] = useState<string | null>(null);
-
-  const handleClose = () => {
-    setHidingProject(selectedProject);
-    setTimeout(() => {
-      setSelectedProject(null);
-      setHidingProject(null);
-    }, 800);
-  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -176,115 +167,71 @@ export function GlassDashboard({ terminal }: GlassDashboardProps) {
       </div>
       <AnimatePresence>
         {selectedProject && (
-          <motion.div 
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-center p-4 sm:p-8 pointer-events-none"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 1 }}
-          >
+          <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center p-4 sm:p-8 pointer-events-none">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               className="absolute inset-0 bg-stone-900/40 backdrop-blur-sm pointer-events-auto"
-              onClick={handleClose}
+              onClick={() => setSelectedProject(null)}
             />
             {(() => {
-              const project = userData.projects.find((p) => p.name === selectedProject);
-              if (!project) return null;
-              
-              const isHiding = hidingProject === project.name;
-
-              return (
-                <motion.div
-                  layoutId={!isHiding ? `project-container-${project.name}` : undefined}
-                  className={`w-full max-w-3xl rounded-3xl p-8 sm:p-12 overflow-hidden flex flex-col relative pointer-events-auto z-10 transition-colors duration-300 ${
-                    isHiding ? 'bg-transparent border-transparent shadow-none' : 'bg-white/90 backdrop-blur-2xl border border-white/60 shadow-[0_32px_64px_rgba(0,0,0,0.1)]'
-                  }`}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {isHiding && (
-                    <div className="absolute inset-0 pointer-events-none z-0">
-                      {Array.from({ length: 150 }).map((_, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ 
-                            x: 0, 
-                            y: 0,
-                            scale: 1,
-                            opacity: 1,
-                          }}
-                          animate={{ 
-                            x: (Math.random() - 0.5) * 800, 
-                            y: (Math.random() - 0.5) * 800,
-                            rotate: (Math.random() - 0.5) * 720,
-                            scale: 0,
-                            opacity: 0,
-                          }}
-                          transition={{ duration: 0.6 + Math.random() * 0.4, ease: "easeOut" }}
-                          className="absolute bg-white backdrop-blur-md rounded-sm"
-                          style={{
-                            left: `${(i % 15) * 6.66}%`,
-                            top: `${Math.floor(i / 15) * 10}%`,
-                            width: '6.67%',
-                            height: '10.1%',
-                          }}
-                        />
-                      ))}
-                    </div>
-                  )}
-
-                  {!isHiding && (
-                    <>
-                      <motion.button 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={handleClose}
-                        className="absolute top-6 right-6 p-2 rounded-full hover:bg-stone-100 text-stone-500 hover:text-stone-900 transition-colors z-20"
-                      >
-                        <X size={24} />
-                      </motion.button>
-                      <div className="flex justify-between items-start mb-6">
-                        <motion.h3 layoutId={`project-title-${project.name}`} className="text-3xl font-bold text-stone-900 pr-12 relative z-10">{project.name}</motion.h3>
-                      </div>
-                      <motion.div 
-                        initial={{ opacity: 0 }} 
-                        animate={{ opacity: 1 }} 
-                        exit={{ opacity: 0 }} 
-                        transition={{ duration: 0.2 }}
-                        className="relative z-10"
-                      >
-                        <div className="flex flex-wrap gap-2 mb-8">
-                          {project.tech.map((t) => (
-                            <span key={t} className="text-sm px-3 py-1.5 rounded-md bg-amber-700/10 border border-amber-700/20 text-amber-900 font-medium">
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                        <p className="text-lg text-stone-600 mb-8 leading-relaxed flex-1">
-                          {project.description}
-                        </p>
-                        
-                        <div className="mt-auto pt-8 border-t border-stone-200/50 flex justify-end">
-                          <a
-                            href={project.link}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-700 text-amber-50 hover:bg-amber-800 transition-colors shadow-lg shadow-amber-700/20 font-medium"
-                          >
-                            <span>View Project</span>
-                            <ExternalLink size={18} />
-                          </a>
-                        </div>
-                      </motion.div>
-                    </>
-                  )}
-                </motion.div>
-              );
+               const project = userData.projects.find((p) => p.name === selectedProject);
+               if (!project) return null;
+               
+               return (
+                 <motion.div
+                   layoutId={`project-container-${project.name}`}
+                   className="w-full max-w-3xl rounded-3xl p-8 sm:p-12 overflow-hidden flex flex-col relative pointer-events-auto z-10 bg-white/90 backdrop-blur-2xl border border-white/60 shadow-[0_32px_64px_rgba(0,0,0,0.1)]"
+                   onClick={(e) => e.stopPropagation()}
+                 >
+                   <motion.button 
+                     initial={{ opacity: 0 }}
+                     animate={{ opacity: 1 }}
+                     exit={{ opacity: 0 }}
+                     onClick={() => setSelectedProject(null)}
+                     className="absolute top-6 right-6 p-2 rounded-full hover:bg-stone-100 text-stone-500 hover:text-stone-900 transition-colors z-20"
+                   >
+                     <X size={24} />
+                   </motion.button>
+                   <div className="flex justify-between items-start mb-6">
+                     <motion.h3 layoutId={`project-title-${project.name}`} className="text-3xl font-bold text-stone-900 pr-12 relative z-10">{project.name}</motion.h3>
+                   </div>
+                   <motion.div 
+                     initial={{ opacity: 0 }} 
+                     animate={{ opacity: 1 }} 
+                     exit={{ opacity: 0 }} 
+                     transition={{ duration: 0.2 }}
+                     className="relative z-10"
+                   >
+                     <div className="flex flex-wrap gap-2 mb-8">
+                       {project.tech.map((t) => (
+                         <span key={t} className="text-sm px-3 py-1.5 rounded-md bg-amber-700/10 border border-amber-700/20 text-amber-900 font-medium">
+                           {t}
+                         </span>
+                       ))}
+                     </div>
+                     <p className="text-lg text-stone-600 mb-8 leading-relaxed flex-1">
+                       {project.description}
+                     </p>
+                     
+                     <div className="mt-auto pt-8 border-t border-stone-200/50 flex justify-end">
+                       <a
+                         href={project.link}
+                         target="_blank"
+                         rel="noreferrer"
+                         className="flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-700 text-amber-50 hover:bg-amber-800 transition-colors shadow-lg shadow-amber-700/20 font-medium"
+                       >
+                         <span>View Project</span>
+                         <ExternalLink size={18} />
+                       </a>
+                     </div>
+                   </motion.div>
+                 </motion.div>
+               );
             })()}
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </div>
