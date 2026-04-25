@@ -39,12 +39,12 @@ export function CustomCursor() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-5 h-5 rounded-full pointer-events-none z-[9999] backdrop-blur-sm border border-black/10 shadow-[0_0_10px_rgba(0,0,0,0.05)]"
+      className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[9999] backdrop-blur-md border border-white/40 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
       animate={{
-        x: pos.x - 10,
-        y: pos.y - 10,
+        x: pos.x - 16,
+        y: pos.y - 16,
         scale: isHovering ? 1.5 : 1,
-        backgroundColor: isHovering ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.03)',
+        backgroundColor: isHovering ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.05)',
       }}
       transition={{
         type: 'spring',

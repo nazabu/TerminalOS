@@ -6,6 +6,33 @@ interface TerminalProps {
   terminal: ReturnType<typeof useTerminal>;
 }
 
+const TypewriterLine = ({ text, delay }: { text: string; delay: number }) => {
+  const [displayed, setDisplayed] = useState('');
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    let interval: ReturnType<typeof setInterval>;
+
+    timeout = setTimeout(() => {
+      let i = 0;
+      interval = setInterval(() => {
+        setDisplayed(text.slice(0, i + 1));
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+        }
+      }, 30);
+    }, delay * 1000);
+
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(interval);
+    };
+  }, [text, delay]);
+
+  return <div>{displayed}</div>;
+};
+
 export function Terminal({ terminal }: TerminalProps) {
   const [input, setInput] = useState('');
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -78,7 +105,7 @@ export function Terminal({ terminal }: TerminalProps) {
   ];
 
   return (
-    <div className="h-full w-full bg-transparent text-slate-700 font-mono p-4 sm:p-8 text-sm sm:text-base selection:bg-indigo-100 relative overflow-hidden hide-cursor">
+    <div className="h-full w-full bg-transparent text-slate-300 font-mono p-4 sm:p-8 text-sm sm:text-base selection:bg-slate-700 relative overflow-hidden hide-cursor">
       {/* CRT Scanline Overlay */}
       <div className="absolute inset-0 scanlines z-50 mix-blend-overlay opacity-50 pointer-events-none" />
       
@@ -86,16 +113,11 @@ export function Terminal({ terminal }: TerminalProps) {
         <div className="mb-6 text-slate-500">
           <AnimatePresence>
             {isBooting ? (
-              bootLines.map((line, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.4, duration: 0.3 }}
-                >
-                  {line}
-                </motion.div>
-              ))
+              <motion.div exit={{ opacity: 0 }}>
+                {bootLines.map((line, i) => (
+                  <TypewriterLine key={i} text={line} delay={i * 0.6} />
+                ))}
+              </motion.div>
             ) : (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
                 <div>Terminal OS v1.0.0</div>
@@ -120,9 +142,9 @@ export function Terminal({ terminal }: TerminalProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               >
-                <div className="flex items-center text-indigo-600">
+                <div className="flex items-center text-emerald-500">
                   <span className="mr-2">guest@terminal-os:~$</span>
-                  <span className="text-slate-900">{log.cmd}</span>
+                  <span className="text-white">{log.cmd}</span>
                 </div>
                 <div>{log.output}</div>
               </motion.div>
@@ -132,7 +154,7 @@ export function Terminal({ terminal }: TerminalProps) {
 
         {!isBooting && (
           <motion.div 
-            className="flex items-center text-indigo-600 mt-2 border-l-2 border-indigo-500/30 pl-3 glow-flicker"
+            className="flex items-center text-emerald-500 mt-2 border-l-2 border-emerald-500/50 pl-3 glow-flicker"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -144,7 +166,7 @@ export function Terminal({ terminal }: TerminalProps) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="bg-transparent outline-none border-none flex-1 text-slate-900 caret-indigo-600"
+              className="bg-transparent outline-none border-none flex-1 text-white caret-emerald-500"
               autoFocus
               spellCheck={false}
               autoComplete="off"
