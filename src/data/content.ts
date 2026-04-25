@@ -28,7 +28,6 @@ export const userData = {
   contact: {
     email: "engineer@example.com",
     github: "https://github.com/example",
-    linkedin: "https://linkedin.com/in/example",
-    twitter: "https://twitter.com/example"
+    linkedin: "https://linkedin.com/in/example"
   }
 };

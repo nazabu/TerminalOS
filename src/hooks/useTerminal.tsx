@@ -145,7 +145,6 @@ export function useTerminal() {
             <div><span className="text-slate-300 font-bold w-20 inline-block">Email:</span> <a href={`mailto:${userData.contact.email}`} className="underline hover:text-white">{userData.contact.email}</a></div>
             <div><span className="text-slate-300 font-bold w-20 inline-block">GitHub:</span> <a href={userData.contact.github} target="_blank" rel="noreferrer" className="underline hover:text-white">{userData.contact.github}</a></div>
             <div><span className="text-slate-300 font-bold w-20 inline-block">LinkedIn:</span> <a href={userData.contact.linkedin} target="_blank" rel="noreferrer" className="underline hover:text-white">{userData.contact.linkedin}</a></div>
-            <div><span className="text-slate-300 font-bold w-20 inline-block">Twitter:</span> <a href={userData.contact.twitter} target="_blank" rel="noreferrer" className="underline hover:text-white">{userData.contact.twitter}</a></div>
           </div>
         );
         break;

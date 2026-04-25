@@ -1,6 +1,6 @@
 import React from 'react';
 import { userData } from '../data/content';
-import { Terminal as TerminalIcon, User, Code, Wrench, Mail, ExternalLink, Github, Linkedin, Twitter } from 'lucide-react';
+import { Terminal as TerminalIcon, User, Code, Wrench, Mail, ExternalLink, Github, Linkedin } from 'lucide-react';
 import { useTerminal } from '../hooks/useTerminal';
 import { motion } from 'motion/react';
 
@@ -82,9 +82,6 @@ export function GlassDashboard({ terminal }: GlassDashboardProps) {
               </a>
               <a href={userData.contact.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-slate-300 hover:text-white transition-colors">
                 <Linkedin size={18} className="text-emerald-500/70" /> LinkedIn
-              </a>
-              <a href={userData.contact.twitter} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-slate-300 hover:text-white transition-colors">
-                <Twitter size={18} className="text-emerald-500/70" /> Twitter
               </a>
             </div>
           </motion.div>
