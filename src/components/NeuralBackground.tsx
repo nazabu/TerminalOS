@@ -52,8 +52,8 @@ export function NeuralBackground() {
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = 'rgba(16, 185, 129, 0.4)';
-      ctx.strokeStyle = 'rgba(16, 185, 129, 0.15)';
+      ctx.fillStyle = 'rgba(180, 83, 9, 0.15)';
+      ctx.strokeStyle = 'rgba(180, 83, 9, 0.05)';
       ctx.lineWidth = 1;
 
       for (let i = 0; i < particles.length; i++) {
@@ -88,7 +88,7 @@ export function NeuralBackground() {
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             // Opacity based on distance
-            ctx.strokeStyle = `rgba(16, 185, 129, ${0.15 * (1 - dist2 / 120)})`;
+            ctx.strokeStyle = `rgba(180, 83, 9, ${0.1 * (1 - dist2 / 120)})`;
             ctx.stroke();
           }
         }

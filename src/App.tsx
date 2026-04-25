@@ -21,7 +21,7 @@ const terminalVariants = {
     opacity: 1, 
     scaleY: [0.01, 0.01, 1],
     scaleX: [0, 1, 1],
-    filter: ['brightness(10) blur(20px)', 'brightness(3) blur(5px)', 'brightness(1) blur(0px)'],
+    filter: ['blur(10px)', 'blur(5px)', 'blur(0px)'],
     transition: { 
       duration: 0.7, 
       times: [0, 0.4, 1],
@@ -32,7 +32,7 @@ const terminalVariants = {
     opacity: [1, 1, 0],
     scaleY: [1, 0.01, 0.01],
     scaleX: [1, 1, 0],
-    filter: ['brightness(1)', 'brightness(5)', 'brightness(10)'],
+    filter: ['blur(0px)', 'blur(5px)', 'blur(10px)'],
     transition: { 
       duration: 0.5,
       times: [0, 0.6, 1],
@@ -44,12 +44,12 @@ const terminalVariants = {
 const uiVariants = {
   initial: { 
     opacity: 0,
-    filter: 'blur(40px) saturate(0) brightness(3)',
+    filter: 'blur(20px)',
     scale: 1.1,
   },
   animate: { 
     opacity: 1,
-    filter: 'blur(0px) saturate(1) brightness(1)',
+    filter: 'blur(0px)',
     scale: 1,
     transition: { 
       duration: 1.2, 
@@ -61,10 +61,10 @@ const uiVariants = {
     x: [0, -15, 15, -10, 10, 0],
     y: [0, 10, -10, 10, -10, 0],
     filter: [
-      'hue-rotate(0deg) contrast(1)', 
-      'hue-rotate(90deg) contrast(4) invert(0.2)', 
-      'hue-rotate(-90deg) contrast(4) invert(0.5)', 
-      'blur(20px)'
+      'blur(0px)', 
+      'blur(5px)', 
+      'blur(10px)', 
+      'blur(15px)'
     ],
     scale: [1, 1.05, 1],
     transition: { 
@@ -78,7 +78,7 @@ export default function App() {
   const terminal = useTerminal();
 
   return (
-    <div className="fixed inset-0 w-full h-full bg-[#050505] overflow-hidden">
+    <div className="fixed inset-0 w-full h-full bg-[#f4f1ea] overflow-hidden">
       <NeuralBackground />
       <CustomCursor />
       <AnimatePresence mode="wait">

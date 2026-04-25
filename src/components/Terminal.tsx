@@ -6,7 +6,7 @@ interface TerminalProps {
   terminal: ReturnType<typeof useTerminal>;
 }
 
-const TypewriterLine = ({ text, delay }: { text: string; delay: number }) => {
+const TypewriterLine = ({ text, delay }: { text: string; delay: number; key?: string | number }) => {
   const [displayed, setDisplayed] = useState('');
 
   useEffect(() => {
@@ -105,12 +105,12 @@ export function Terminal({ terminal }: TerminalProps) {
   ];
 
   return (
-    <div className="h-full w-full bg-transparent text-slate-300 font-mono p-4 sm:p-8 text-sm sm:text-base selection:bg-slate-700 relative overflow-hidden hide-cursor">
+    <div className="h-full w-full bg-transparent text-stone-800 font-mono p-4 sm:p-8 text-sm sm:text-base selection:bg-amber-200 selection:text-stone-900 relative overflow-hidden hide-cursor">
       {/* CRT Scanline Overlay */}
       <div className="absolute inset-0 scanlines z-50 mix-blend-overlay opacity-50 pointer-events-none" />
       
       <div className="max-w-4xl mx-auto relative z-10 h-full overflow-y-auto custom-scrollbar pb-16 pr-4">
-        <div className="mb-6 text-slate-500">
+        <div className="mb-6 text-stone-500">
           <AnimatePresence>
             {isBooting ? (
               <motion.div exit={{ opacity: 0 }}>
@@ -142,9 +142,9 @@ export function Terminal({ terminal }: TerminalProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               >
-                <div className="flex items-center text-emerald-500">
+                <div className="flex items-center text-amber-700">
                   <span className="mr-2">guest@terminal-os:~$</span>
-                  <span className="text-white">{log.cmd}</span>
+                  <span className="text-stone-900">{log.cmd}</span>
                 </div>
                 <div>{log.output}</div>
               </motion.div>
@@ -154,7 +154,7 @@ export function Terminal({ terminal }: TerminalProps) {
 
         {!isBooting && (
           <motion.div 
-            className="flex items-center text-emerald-500 mt-2 border-l-2 border-emerald-500/50 pl-3 glow-flicker"
+            className="flex items-center text-amber-700 mt-2 border-l-2 border-amber-700/50 pl-3 glow-flicker"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -166,7 +166,7 @@ export function Terminal({ terminal }: TerminalProps) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="bg-transparent outline-none border-none flex-1 text-white caret-emerald-500"
+              className="bg-transparent outline-none border-none flex-1 text-stone-900 caret-amber-700"
               autoFocus
               spellCheck={false}
               autoComplete="off"

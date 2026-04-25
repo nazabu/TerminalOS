@@ -67,7 +67,7 @@ export function useTerminal() {
     const ClickableCmd = ({ command, desc }: { command: string, desc: string }) => (
       <div>
         <span 
-          className="text-emerald-500 font-bold w-24 inline-block cursor-pointer hover:text-emerald-400 transition-colors"
+          className="text-amber-700 font-bold w-24 inline-block cursor-pointer hover:text-amber-600 transition-colors"
           onClick={() => setInput?.(command)}
         >
           {command}
