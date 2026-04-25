@@ -17,7 +17,7 @@ export const userData = {
       name: "TerminalOS",
       description: "A terminal-based personal portfolio website.",
       tech: ["React", "TypeScript", "Tailwind CSS"],
-      link: "https://github.com/nazabu/terminal-os"
+      link: "https://github.com/example/terminal-os"
     }
   ],
   skills: {
