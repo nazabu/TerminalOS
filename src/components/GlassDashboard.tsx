@@ -106,9 +106,8 @@ export function GlassDashboard({ terminal }: GlassDashboardProps) {
                   className="bg-white/60 rounded-2xl p-5 border border-white/40 hover:border-amber-700/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(180,83,9,0.08)] cursor-pointer flex flex-col"
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <motion.h3 layoutId={`project-title-${project.name}`} layout="position" className="text-lg font-medium text-stone-900">{project.name}</motion.h3>
-                    <motion.a 
-                      layoutId={`project-icon-${project.name}`}
+                    <motion.h3 layoutId={`project-title-${project.name}`} className="text-lg font-medium text-stone-900">{project.name}</motion.h3>
+                    <a 
                       href={project.link} 
                       target="_blank" 
                       rel="noreferrer" 
@@ -116,16 +115,16 @@ export function GlassDashboard({ terminal }: GlassDashboardProps) {
                       onClick={(e) => e.stopPropagation()}
                     >
                       <ExternalLink size={16} />
-                    </motion.a>
+                    </a>
                   </div>
-                  <motion.p layoutId={`project-desc-${project.name}`} layout="position" className="text-sm text-stone-600 mb-4 flex-1">{project.description}</motion.p>
-                  <motion.div layoutId={`project-tech-${project.name}`} className="flex flex-wrap gap-2 mt-auto">
+                  <p className="text-sm text-stone-600 mb-4 flex-1">{project.description}</p>
+                  <div className="flex flex-wrap gap-2 mt-auto">
                     {project.tech.map(t => (
                       <span key={t} className="text-xs px-2 py-1 rounded-md bg-amber-700/10 border border-amber-700/20 text-amber-900">
                         {t}
                       </span>
                     ))}
-                  </motion.div>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -191,31 +190,32 @@ export function GlassDashboard({ terminal }: GlassDashboardProps) {
                     <X size={24} />
                   </button>
                   <div className="flex justify-between items-start mb-6">
-                    <motion.h3 layoutId={`project-title-${project.name}`} layout="position" className="text-3xl font-bold text-stone-900 pr-12">{project.name}</motion.h3>
+                    <motion.h3 layoutId={`project-title-${project.name}`} className="text-3xl font-bold text-stone-900 pr-12">{project.name}</motion.h3>
                   </div>
-                  <motion.div layoutId={`project-tech-${project.name}`} className="flex flex-wrap gap-2 mb-8">
-                    {project.tech.map((t) => (
-                      <span key={t} className="text-sm px-3 py-1.5 rounded-md bg-amber-700/10 border border-amber-700/20 text-amber-900 font-medium">
-                        {t}
-                      </span>
-                    ))}
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+                    <div className="flex flex-wrap gap-2 mb-8">
+                      {project.tech.map((t) => (
+                        <span key={t} className="text-sm px-3 py-1.5 rounded-md bg-amber-700/10 border border-amber-700/20 text-amber-900 font-medium">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="text-lg text-stone-600 mb-8 leading-relaxed flex-1">
+                      {project.description}
+                    </p>
+                    
+                    <div className="mt-auto pt-8 border-t border-stone-200/50 flex justify-end">
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-700 text-amber-50 hover:bg-amber-800 transition-colors shadow-lg shadow-amber-700/20 font-medium"
+                      >
+                        <span>View Project</span>
+                        <ExternalLink size={18} />
+                      </a>
+                    </div>
                   </motion.div>
-                  <motion.p layoutId={`project-desc-${project.name}`} layout="position" className="text-lg text-stone-600 mb-8 leading-relaxed flex-1">
-                    {project.description}
-                  </motion.p>
-                  
-                  <div className="mt-auto pt-8 border-t border-stone-200/50 flex justify-end">
-                    <motion.a
-                      layoutId={`project-icon-${project.name}`}
-                      href={project.link}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-700 text-amber-50 hover:bg-amber-800 transition-colors shadow-lg shadow-amber-700/20 font-medium"
-                    >
-                      <span>View Project</span>
-                      <ExternalLink size={18} />
-                    </motion.a>
-                  </div>
                 </motion.div>
               );
             })()}

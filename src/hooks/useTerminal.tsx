@@ -163,7 +163,7 @@ export function useTerminal() {
         clearLogs();
         return; // Return early to avoid adding the 'clear' command to logs
       case 'ui':
-        output = <div className="mt-2 mb-4 text-emerald-500">Switching to UI mode...</div>;
+        output = <div className="mt-2 mb-4 text-amber-700">Switching to UI mode...</div>;
         addLog(trimmed, output);
         setTimeout(() => setMode('ui'), 500);
         return;
