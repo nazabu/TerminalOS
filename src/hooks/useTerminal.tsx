@@ -20,7 +20,7 @@ export function useTerminal() {
   const [state, setState] = useState<TerminalState>({
     lastVisit: null,
     logs: [],
-    mode: 'terminal',
+    mode: 'ui',
     sessionStart: Date.now(),
   });
 
@@ -33,7 +33,7 @@ export function useTerminal() {
     setState(prev => ({
       ...prev,
       lastVisit: storedLastVisit ? parseInt(storedLastVisit, 10) : null,
-      mode: storedMode || 'terminal',
+      mode: storedMode || 'ui',
     }));
 
     localStorage.setItem('terminal_last_visit', now.toString());

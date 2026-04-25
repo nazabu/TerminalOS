@@ -46,7 +46,7 @@ export function GlassDashboard({ terminal }: GlassDashboardProps) {
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/40 hover:bg-black/60 border border-emerald-500/30 backdrop-blur-md transition-all text-sm font-medium hover:glow-flicker"
           >
             <TerminalIcon size={16} className="text-emerald-400" />
-            Return to Terminal
+            Open Terminal
           </motion.button>
         </header>
 
