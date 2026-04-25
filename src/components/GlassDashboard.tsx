@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { userData } from '../data/content';
-import { Terminal as TerminalIcon, User, Code, Wrench, Mail, ExternalLink, Github, Linkedin, Twitter } from 'lucide-react';
+import { Terminal as TerminalIcon, User, Code, Wrench, Mail, ExternalLink, Github, Linkedin, Twitter, X } from 'lucide-react';
 import { useTerminal } from '../hooks/useTerminal';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface GlassDashboardProps {
   terminal: ReturnType<typeof useTerminal>;
 }
 
 export function GlassDashboard({ terminal }: GlassDashboardProps) {
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -97,22 +99,34 @@ export function GlassDashboard({ terminal }: GlassDashboardProps) {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {userData.projects.map((project) => (
-                <div key={project.name} className="bg-white/60 rounded-2xl p-5 border border-white/40 hover:border-amber-700/30 transition-all duration-300 hover:-translate-y-1">
+                <motion.div 
+                  key={project.name} 
+                  layoutId={`project-container-${project.name}`}
+                  onClick={() => setSelectedProject(project.name)}
+                  className="bg-white/60 rounded-2xl p-5 border border-white/40 hover:border-amber-700/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(180,83,9,0.08)] cursor-pointer flex flex-col"
+                >
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-medium text-stone-900">{project.name}</h3>
-                    <a href={project.link} target="_blank" rel="noreferrer" className="text-stone-500 hover:text-amber-700 transition-colors">
+                    <motion.h3 layoutId={`project-title-${project.name}`} layout="position" className="text-lg font-medium text-stone-900">{project.name}</motion.h3>
+                    <motion.a 
+                      layoutId={`project-icon-${project.name}`}
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="text-stone-500 hover:text-amber-700 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <ExternalLink size={16} />
-                    </a>
+                    </motion.a>
                   </div>
-                  <p className="text-sm text-stone-600 mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
+                  <motion.p layoutId={`project-desc-${project.name}`} layout="position" className="text-sm text-stone-600 mb-4 flex-1">{project.description}</motion.p>
+                  <motion.div layoutId={`project-tech-${project.name}`} className="flex flex-wrap gap-2 mt-auto">
                     {project.tech.map(t => (
                       <span key={t} className="text-xs px-2 py-1 rounded-md bg-amber-700/10 border border-amber-700/20 text-amber-900">
                         {t}
                       </span>
                     ))}
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               ))}
             </div>
           </motion.div>
@@ -152,6 +166,62 @@ export function GlassDashboard({ terminal }: GlassDashboardProps) {
           </motion.div>
         </motion.div>
       </div>
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8 bg-stone-900/40 backdrop-blur-sm"
+            onClick={() => setSelectedProject(null)}
+          >
+            {(() => {
+              const project = userData.projects.find((p) => p.name === selectedProject);
+              if (!project) return null;
+              return (
+                <motion.div
+                  layoutId={`project-container-${project.name}`}
+                  className="w-full max-w-3xl bg-white/90 backdrop-blur-2xl border border-white/60 rounded-3xl p-8 sm:p-12 shadow-[0_32px_64px_rgba(0,0,0,0.1)] overflow-y-auto max-h-[90vh] custom-scrollbar flex flex-col relative"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button 
+                    onClick={() => setSelectedProject(null)}
+                    className="absolute top-6 right-6 p-2 rounded-full hover:bg-stone-100 text-stone-500 hover:text-stone-900 transition-colors"
+                  >
+                    <X size={24} />
+                  </button>
+                  <div className="flex justify-between items-start mb-6">
+                    <motion.h3 layoutId={`project-title-${project.name}`} layout="position" className="text-3xl font-bold text-stone-900 pr-12">{project.name}</motion.h3>
+                  </div>
+                  <motion.div layoutId={`project-tech-${project.name}`} className="flex flex-wrap gap-2 mb-8">
+                    {project.tech.map((t) => (
+                      <span key={t} className="text-sm px-3 py-1.5 rounded-md bg-amber-700/10 border border-amber-700/20 text-amber-900 font-medium">
+                        {t}
+                      </span>
+                    ))}
+                  </motion.div>
+                  <motion.p layoutId={`project-desc-${project.name}`} layout="position" className="text-lg text-stone-600 mb-8 leading-relaxed flex-1">
+                    {project.description}
+                  </motion.p>
+                  
+                  <div className="mt-auto pt-8 border-t border-stone-200/50 flex justify-end">
+                    <motion.a
+                      layoutId={`project-icon-${project.name}`}
+                      href={project.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-700 text-amber-50 hover:bg-amber-800 transition-colors shadow-lg shadow-amber-700/20 font-medium"
+                    >
+                      <span>View Project</span>
+                      <ExternalLink size={18} />
+                    </motion.a>
+                  </div>
+                </motion.div>
+              );
+            })()}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
